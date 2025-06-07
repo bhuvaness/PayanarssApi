@@ -13,6 +13,7 @@ namespace CustomerManagementModule.Mappings
             CreateMap<CustomerContact, CustomerContactDto>().ReverseMap();
             CreateMap<Address, AddressDto>().ReverseMap();
             CreateMap<CustomerAddressMap, CustomerAddressMapDto>().ReverseMap();
+            CreateMap<CustomerCustomerTypeMap, CustomerCustomerTypeMapDto>().ReverseMap();
         }
     }
 }

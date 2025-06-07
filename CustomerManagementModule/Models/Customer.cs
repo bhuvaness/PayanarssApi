@@ -10,7 +10,7 @@ namespace CustomerManagementModule.Models
         public string? Email { get => email; set { email = value; MarkDirty(); } }
         public string? Phone { get => phone; set { phone = value; MarkDirty(); } }
 
-        public ICollection<CustomerType> CustomerTypes { get; set; }
+        public ICollection<CustomerCustomerTypeMap> CustomerCustomerTypes { get; set; }
         public ICollection<CustomerAddressMap> CustomerAddresses { get; set; }
         public ICollection<CustomerContact> Contacts { get; set; }
     }

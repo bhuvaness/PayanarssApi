@@ -1,6 +1,6 @@
-using PayanarssCustomerModules.Models;
+using CustomerManagementModule.Models;
 
-namespace PayanarssCustomerModules.DTOs
+namespace CustomerManagementModule.DTOs
 {
     public class CustomerCustomerTypeMapDto : DataModel
     {

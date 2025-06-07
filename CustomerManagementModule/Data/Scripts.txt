@@ -1,0 +1,60 @@
+﻿CREATE TABLE Customer (
+    Id TEXT PRIMARY KEY,
+    Name TEXT NOT NULL,
+    Email TEXT,
+    Phone TEXT
+);
+
+CREATE TABLE CustomerType (
+    Id TEXT PRIMARY KEY,
+    TypeName TEXT NOT NULL
+);
+
+
+CREATE TABLE CustomerCustomerTypeMap (
+    Id TEXT PRIMARY KEY,
+    CustomerId TEXT NOT NULL,
+    CustomerTypeId TEXT NOT NULL,
+    FOREIGN KEY (CustomerId) REFERENCES Customer(Id),
+    FOREIGN KEY (CustomerTypeId) REFERENCES CustomerType(Id)
+);
+
+
+CREATE TABLE Address (
+    Id TEXT PRIMARY KEY,
+    AddressLine1 TEXT NOT NULL,
+    AddressLine2 TEXT,
+    City TEXT NOT NULL,
+    State TEXT NOT NULL,
+    PostalCode TEXT NOT NULL,
+    Country TEXT NOT NULL
+);
+
+
+CREATE TABLE CustomerAddressMap (
+    Id TEXT PRIMARY KEY,
+    CustomerId TEXT NOT NULL,
+    AddressId TEXT NOT NULL,
+    IsPrimary BOOLEAN NOT NULL DEFAULT 0,
+    AddressType TEXT,
+    FOREIGN KEY (CustomerId) REFERENCES Customer(Id),
+    FOREIGN KEY (AddressId) REFERENCES Address(Id)
+);
+
+CREATE TABLE CustomerContact (
+    Id TEXT PRIMARY KEY,
+    CustomerId TEXT NOT NULL,
+    ContactName TEXT NOT NULL,
+    Email TEXT,
+    Phone TEXT,
+    Role TEXT,
+    FOREIGN KEY (CustomerId) REFERENCES Customer(Id)
+);
+
+CREATE TABLE CustomerNote (
+    Id TEXT PRIMARY KEY,
+    CustomerId TEXT NOT NULL,
+    Note TEXT NOT NULL,
+    CreatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (CustomerId) REFERENCES Customer(Id)
+);

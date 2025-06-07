@@ -13,6 +13,7 @@ namespace CustomerManagementModule.Data
         public DbSet<CustomerType> CustomerTypes { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<CustomerAddressMap> CustomerAddressMaps { get; set; }
+        public DbSet<CustomerCustomerTypeMap> CustomerCustomerTypeMaps { get; set; }
         public DbSet<CustomerContact> CustomerContacts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -36,11 +37,16 @@ namespace CustomerManagementModule.Data
                 .WithMany(c => c.Contacts)
                 .HasForeignKey(c => c.CustomerId);
 
-            // Customer ↔ CustomerType (One-to-Many)
-            modelBuilder.Entity<CustomerType>()
-                .HasOne(c => c.Customer)
-                .WithMany(c => c.CustomerTypes)
-                .HasForeignKey(c => c.CustomerId);
+            // Customer ↔ CustomerType (via CustomerCustomerTypeMap)
+            modelBuilder.Entity<CustomerCustomerTypeMap>()
+                .HasOne(m => m.Customer)
+                .WithMany(c => c.CustomerCustomerTypes)
+                .HasForeignKey(m => m.CustomerId);
+
+            modelBuilder.Entity<CustomerCustomerTypeMap>()
+                .HasOne(m => m.CustomerType)
+                .WithMany(a => a.CustomerMappings)
+                .HasForeignKey(m => m.CustomerTypeId);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace CustomerManagementModule.Repositories
         public async Task<IEnumerable<Customer>> GetAllAsync()
         {
             return await _context.Customers
-                .Include(c => c.CustomerTypes)
+                .Include(c => c.CustomerCustomerTypes)
                 .Include(c => c.CustomerAddresses)
                     .ThenInclude(ca => ca.Address)
                 .Include(c => c.Contacts)
@@ -27,7 +27,7 @@ namespace CustomerManagementModule.Repositories
         public async Task<Customer?> GetByIdAsync(string id)
         {
             return await _context.Customers
-                .Include(c => c.CustomerTypes)
+                .Include(c => c.CustomerCustomerTypes)
                 .Include(c => c.CustomerAddresses)
                     .ThenInclude(ca => ca.Address)
                 .Include(c => c.Contacts)
@@ -42,8 +42,8 @@ namespace CustomerManagementModule.Repositories
             if (customer.Contacts != null && customer.Contacts.Any())
                 await _context.CustomerContacts.AddRangeAsync(customer.Contacts);
 
-            if (customer.CustomerTypes != null && customer.CustomerTypes.Any())
-                await _context.CustomerTypes.AddRangeAsync(customer.CustomerTypes);
+            if (customer.CustomerCustomerTypes != null && customer.CustomerCustomerTypes.Any())
+                await _context.CustomerCustomerTypeMaps.AddRangeAsync(customer.CustomerCustomerTypes);
 
             // Add the main customer entity after related entities are added
             await _context.Customers.AddAsync(customer);
@@ -72,11 +72,11 @@ namespace CustomerManagementModule.Repositories
                 await _context.CustomerContacts.AddRangeAsync(customer.Contacts);
             }
 
-            if (customer.CustomerTypes != null && customer.CustomerTypes.Any())
+            if (customer.CustomerCustomerTypes != null && customer.CustomerCustomerTypes.Any())
             {
-                _context.CustomerTypes.RemoveRange(
-                    _context.CustomerTypes.Where(ct => ct.CustomerId == customer.Id));
-                await _context.CustomerTypes.AddRangeAsync(customer.CustomerTypes);
+                _context.CustomerCustomerTypeMaps.RemoveRange(
+                    _context.CustomerCustomerTypeMaps.Where(ct => ct.CustomerId == customer.Id));
+                await _context.CustomerCustomerTypeMaps.AddRangeAsync(customer.CustomerCustomerTypes);
             }
 
             await _context.SaveChangesAsync();
@@ -89,7 +89,7 @@ namespace CustomerManagementModule.Repositories
             var customer = await _context.Customers
                 .Include(c => c.CustomerAddresses)
                 .Include(c => c.Contacts)
-                .Include(c => c.CustomerTypes)
+                .Include(c => c.CustomerCustomerTypes)
                 .FirstOrDefaultAsync(c => c.Id == id);
 
             if (customer == null)
@@ -106,9 +106,9 @@ namespace CustomerManagementModule.Repositories
                 _context.CustomerContacts.RemoveRange(customer.Contacts);
             }
 
-            if (customer.CustomerTypes != null && customer.CustomerTypes.Any())
+            if (customer.CustomerCustomerTypes != null && customer.CustomerCustomerTypes.Any())
             {
-                _context.CustomerTypes.RemoveRange(customer.CustomerTypes);
+                _context.CustomerCustomerTypeMaps.RemoveRange(customer.CustomerCustomerTypes);
             }
 
             // Remove the customer
