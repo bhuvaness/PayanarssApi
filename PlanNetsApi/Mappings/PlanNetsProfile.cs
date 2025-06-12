@@ -1,4 +1,6 @@
 using AutoMapper;
+using PlanNetsModule.DMs;
+using PlanNetsModule.DTOs;
 
 namespace PlanNetsModule.Mappings
 {
@@ -6,12 +8,12 @@ namespace PlanNetsModule.Mappings
     {
         public PlanNetsProfile()
         {
-            //CreateMap<Customer, CustomerDto>().ReverseMap();
-            //CreateMap<CustomerType, CustomerTypeDto>().ReverseMap();
-            //CreateMap<CustomerContact, CustomerContactDto>().ReverseMap();
-            //CreateMap<Address, AddressDto>().ReverseMap();
-            //CreateMap<CustomerAddressMap, CustomerAddressMapDto>().ReverseMap();
-            //CreateMap<CustomerCustomerTypeMap, CustomerCustomerTypeMapDto>().ReverseMap();
+            //CreateMap<PlanDto, Plan>().ReverseMap();
+
+            CreateMap<Plan, PlanDto>().ReverseMap();
+            CreateMap<PlanType, PlanTypeDto>().ReverseMap();
+            CreateMap<PlanPurpose, PlanPurposeDto>().ReverseMap();
+            CreateMap<PlanStatus, PlanStatusDto>().ReverseMap();
         }
     }
 }

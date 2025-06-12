@@ -16,7 +16,7 @@ namespace PlanNetsModule.Repositories
 
         public override async Task<IEnumerable<Plan>> GetAllAsync()
         {
-            return await _context.Plans
+            return await _context.Plan
                 .Include(p => p.PlanType)
                 .Include(p => p.PlanStatus)
                 .ToListAsync();
@@ -24,7 +24,7 @@ namespace PlanNetsModule.Repositories
 
         public override async Task<Plan> GetByIdAsync(string id)
         {
-            return await _context.Plans
+            return await _context.Plan
                 .Include(p => p.PlanType)
                 .Include(p => p.PlanStatus)
                 .FirstOrDefaultAsync(p => p.Id == id);

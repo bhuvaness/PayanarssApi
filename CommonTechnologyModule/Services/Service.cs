@@ -17,11 +17,12 @@ namespace CommonTechnologyModule.Services
     public class Service<TDto, TDataModel> : IBaseService<TDto, TDataModel> where TDto : class where TDataModel : NamedDataModel
     {
         protected readonly IRepository<TDataModel> _repository;
-        private readonly IMapper _mapper;
+        protected readonly IMapper _mapper;
 
         public Service(IRepository<TDataModel> repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         public virtual async Task<IEnumerable<TDto>> GetAllAsync(string? search = null, int page = 1, int pageSize = 10)

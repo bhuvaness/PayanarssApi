@@ -4,6 +4,6 @@ namespace PlanNetsModule.DTOs
 {
     public class PlanPurposeDto : NamedDataModel
     {
-        public string Description { get; set; }
+        public string? Description { get; set; }
     }
 }

@@ -4,6 +4,6 @@ namespace PlanNetsModule.DMs
 {
     public class PlanPurpose : NamedDataModel
     {
-        public string Description { get; set; }
+        public string? Description { get; set; }
     }
 }

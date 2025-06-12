@@ -4,9 +4,7 @@ namespace PlanNetsModule.DTOs
 {
     public class PlanStatusDto : NamedDataModel
     {
-        public string Description { get; set; }
-
-        public ICollection<PlanDto> Plans { get; set; }
+        public string? Description { get; set; }
     }
 
 }
