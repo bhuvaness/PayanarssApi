@@ -1,0 +1,6 @@
+@CommonTechnologyModule_HostAddress = http://localhost:5258
+
+GET {{CommonTechnologyModule_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
