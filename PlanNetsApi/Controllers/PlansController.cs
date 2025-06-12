@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PlanNetsModule.DMs;
+using PlanNetsModule.DTOs;
 using PlanNetsModule.Services;
 
 [ApiController]
@@ -14,14 +14,14 @@ public class PlansController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Plan>>> GetAll()
+    public async Task<ActionResult<IEnumerable<PlanDto>>> GetAll(string? search = null, int page = 1, int pageSize = 10)
     {
-        var items = await _service.GetAllAsync();
+        var items = await _service.GetAllAsync(search, page, pageSize);
         return Ok(items);
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Plan>> GetById(string id)
+    public async Task<ActionResult<PlanDto>> GetById(string id)
     {
         var item = await _service.GetByIdAsync(id);
         if (item == null) return NotFound();
@@ -29,14 +29,14 @@ public class PlansController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> Create(Plan entity)
+    public async Task<ActionResult> Create(PlanDto entity)
     {
         await _service.AddAsync(entity);
         return CreatedAtAction(nameof(GetById), new { id = entity.Id }, entity);
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult> Update(string id, Plan entity)
+    public async Task<ActionResult> Update(string id, PlanDto entity)
     {
         if (id != entity.Id) return BadRequest();
         await _service.UpdateAsync(entity);

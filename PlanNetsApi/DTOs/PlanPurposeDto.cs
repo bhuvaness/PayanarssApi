@@ -1,8 +1,8 @@
 ﻿using CommonTechnologyModule.DataModels;
 
-namespace PlanNetsModule.DMs
+namespace PlanNetsModule.DTOs
 {
-    public class PlanPurpose : NamedDataModel
+    public class PlanPurposeDto : NamedDataModel
     {
         public string Description { get; set; }
     }

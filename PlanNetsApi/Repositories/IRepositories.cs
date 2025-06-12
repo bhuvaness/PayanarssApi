@@ -1,5 +1,6 @@
 ﻿using CommonTechnologyModule.Repositories;
 using PlanNetsModule.DMs;
+using PlanNetsModule.DTOs;
 
 namespace PlanNetsModule.Repositories
 {

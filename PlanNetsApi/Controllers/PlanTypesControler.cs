@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using PlanNetsModule.DMs;
+using PlanNetsModule.DTOs;
 using PlanNetsModule.Services;
 
 namespace PlanNetsModule.Controllers
@@ -16,14 +18,14 @@ namespace PlanNetsModule.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PlanType>>> GetAll()
+        public async Task<ActionResult<IEnumerable<PlanTypeDto>>> GetAll(string? search = null, int page = 1, int pageSize = 10)
         {
-            var items = await _service.GetAllAsync();
+            var items = await _service.GetAllAsync(search, page, pageSize);
             return Ok(items);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<PlanType>> GetById(string id)
+        public async Task<ActionResult<PlanTypeDto>> GetById(string id)
         {
             var item = await _service.GetByIdAsync(id);
             if (item == null) return NotFound();
@@ -31,14 +33,14 @@ namespace PlanNetsModule.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(PlanType entity)
+        public async Task<ActionResult> Create(PlanTypeDto entity)
         {
             await _service.AddAsync(entity);
             return CreatedAtAction(nameof(GetById), new { id = entity.Id }, entity);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Update(string id, PlanType entity)
+        public async Task<ActionResult> Update(string id, PlanTypeDto entity)
         {
             if (id != entity.Id) return BadRequest();
             await _service.UpdateAsync(entity);

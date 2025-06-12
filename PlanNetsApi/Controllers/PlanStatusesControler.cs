@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PlanNetsModule.DMs;
+using PlanNetsModule.DTOs;
 using PlanNetsModule.Services;
 
 namespace PlanNetsModule.Controllers
@@ -16,14 +16,14 @@ namespace PlanNetsModule.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PlanStatus>>> GetAll()
+        public async Task<ActionResult<IEnumerable<PlanStatusDto>>> GetAll(string? search = null, int page = 1, int pageSize = 10)
         {
-            var items = await _service.GetAllAsync();
+            var items = await _service.GetAllAsync(search, page, pageSize);
             return Ok(items);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<PlanStatus>> GetById(string id)
+        public async Task<ActionResult<PlanStatusDto>> GetById(string id)
         {
             var item = await _service.GetByIdAsync(id);
             if (item == null) return NotFound();
@@ -31,14 +31,14 @@ namespace PlanNetsModule.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(PlanStatus entity)
+        public async Task<ActionResult> Create(PlanStatusDto entity)
         {
             await _service.AddAsync(entity);
             return CreatedAtAction(nameof(GetById), new { id = entity.Id }, entity);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Update(string id, PlanStatus entity)
+        public async Task<ActionResult> Update(string id, PlanStatusDto entity)
         {
             if (id != entity.Id) return BadRequest();
             await _service.UpdateAsync(entity);
